@@ -13,6 +13,11 @@ code {
     monospace;
 }
 
+h1,
+h6 {
+  font-weight: bold;
+}
+
 .logo {
   margin: auto;
   display: block;
@@ -26,6 +31,16 @@ code {
 
 .list-item {
   margin: 26px 0;
+}
+
+.flex-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.flex-items p {
+  margin-right: 50px;
 }
 
 .loader {

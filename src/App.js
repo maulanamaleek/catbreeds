@@ -47,9 +47,9 @@ class App extends Component {
         )}
         >
            <ul className="list-container">
-            {this.state.cat.map( (item,index) => {
+            {this.state.cat.map( item => {
               return (
-                <li className="list-item" key={index}>  
+                <li className="list-item" key={item.id}>  
                   <Accordion>
                     <Card style={{backgroundColor: "#eee"}}>
                       <Accordion.Toggle as={Card.Header} eventKey="0" style={{backgroundColor: "#3498db"}}>
@@ -58,18 +58,18 @@ class App extends Component {
                       <Accordion.Collapse eventKey="0">
                         <Card.Body>
                           <div className="toogle-items" key={item.id}>
-                            <div>
-                              <h5>Origin</h5>
-                              <p>{item.origin}</p>
-                            </div>
-                            <div>
-                              <h5>Weight</h5>
-                              <p>{item.weight.metric} kg</p>
+                            <div className="flex-items">
+                              <p><b>Origin: </b>{item.origin}</p>                            
+                              <p><b>Weight: </b>{item.weight.metric} kg</p>
+                              <p><b>Life Span: </b>{item.life_span} years</p>
                             </div>
 
-                            <h5>Description</h5>
-                            {item.description}
-                            <a href={item.wikipedia_url}>..More info</a>
+                            <h6>Description</h6>
+                            <p>{item.description}-<a href={item.wikipedia_url}>More info</a></p>
+
+                            <h6>Temperament</h6>
+                            <p>{item.temperament}</p>
+                            
                           </div>
                         </Card.Body>
                       </Accordion.Collapse>
@@ -84,7 +84,7 @@ class App extends Component {
        
 
         <div className="footer">
-          <p>Built with <a href="https://thecatapi.com" target="blank">TheCatApi</a></p>
+          <p>Malik 2020 | Built with <a href="https://thecatapi.com" target="blank">TheCatApi</a></p>
         </div>
       </div>
     )

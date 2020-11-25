@@ -16,23 +16,19 @@ class App extends Component {
 
   componentDidMount(){
     axios.get('https://api.thecatapi.com/v1/breeds?page=0&limit=15&api_key=7459a40e-be79-4420-bcd2-08c6c649bb6b')
-    .then(data => {
-      console.log(data)
-      this.setState({cat: data.data})})
-  }
+    .then(data => this.setState({cat: data.data}))
+  };
 
   fetchMoreData = async () => {
-    const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();
     const check = this.state.cat.length / 15;
-    const load = await axios.get(`https://api.thecatapi.com/v1/breeds?page=${check}&limit=15&api_key=7459a40e-be79-4420-bcd2-08c6c649bb6b`, {cancelToken: source.token})
-                 .then(data=> data.data)
+    const load = await axios.get(`https://api.thecatapi.com/v1/breeds?page=${check}&limit=15&api_key=7459a40e-be79-4420-bcd2-08c6c649bb6b`)
+                       .then(data=> data.data);
     const newData = [...this.state.cat, ...load];
 
     if(load.length === 0){
       this.setState({hasmore: false});
     }
-    console.log(this.state.hasmore)
+    
     this.setState({cat: newData});
     
   }
@@ -41,46 +37,51 @@ class App extends Component {
     return (
       <div>
         <img className="logo" src={Logo} alt="Cat Breeds" />
+
         <InfiniteScroll
         initialLoad={false}
         loadMore={this.fetchMoreData}
         hasMore={this.state.hasmore}
         loader={(
-          <div className="loader"></div>
+          <div className="loader" key={0}></div>
         )}
         >
-          <ul className="list-container">
-            {this.state.cat.map(item => {
-              return <li className="list-item" key={item.id}>
-                <Accordion>
-                  <Card>
-                    <Accordion.Toggle as={Card.Header} eventKey="0">
-                      <b>{item.name}</b> - {item.origin}
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="0">
-                      <Card.Body>
-                        <div className="toogle-items">
-                          <div>
-                            <h5>Origin</h5>
-                            <p>{item.origin}</p>
-                          </div>
-                          <div>
-                            <h5>Weight</h5>
-                            <p>{item.weight.metric} kg</p>
-                          </div>
+           <ul className="list-container">
+            {this.state.cat.map( (item,index) => {
+              return (
+                <li className="list-item" key={index}>  
+                  <Accordion>
+                    <Card style={{backgroundColor: "#eee"}}>
+                      <Accordion.Toggle as={Card.Header} eventKey="0" style={{backgroundColor: "#3498db"}}>
+                        <b>{item.name}</b> - {item.origin}
+                      </Accordion.Toggle>
+                      <Accordion.Collapse eventKey="0">
+                        <Card.Body>
+                          <div className="toogle-items" key={item.id}>
+                            <div>
+                              <h5>Origin</h5>
+                              <p>{item.origin}</p>
+                            </div>
+                            <div>
+                              <h5>Weight</h5>
+                              <p>{item.weight.metric} kg</p>
+                            </div>
 
-                          <h5>Description</h5>
-                          {item.description}
-                          <a href={item.wikipedia_url}>..More info</a>
-                        </div>
-                      </Card.Body>
-                    </Accordion.Collapse>
-                  </Card>
-                </Accordion>
-              </li>
+                            <h5>Description</h5>
+                            {item.description}
+                            <a href={item.wikipedia_url}>..More info</a>
+                          </div>
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
+                  </Accordion>
+                </li>
+              )
             })}
-          </ul>
-        </InfiniteScroll>
+              </ul>
+            </InfiniteScroll>
+          
+       
 
         <div className="footer">
           <p>Built with <a href="https://thecatapi.com" target="blank">TheCatApi</a></p>

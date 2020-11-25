@@ -83,3 +83,24 @@ h6 {
     transform: rotate(360deg);
   }
 }
+
+@media screen and (max-width: 768px) {
+  .list-container {
+    width: 75vw;
+  }
+}
+
+@media screen and (max-width: 398px) {
+  .logo {
+    max-width: 50vw;
+  }
+  .list-container {
+    width: 90vw;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .flex-items {
+    display: block;
+  }
+}

@@ -11,6 +11,8 @@ class App extends Component {
     this.state = {
       cat: [],
       hasmore: true,
+      search: "",
+      result: [],
     }
   }
 
@@ -33,26 +35,32 @@ class App extends Component {
     
   }
 
-  render() {
-    return (
-      <div>
-        <img className="logo" src={Logo} alt="Cat Breeds" />
+  change = (e) => {
+    this.setState({
+      search: e.target.value,
+    });
+    
+  }
 
-        <InfiniteScroll
-        initialLoad={false}
-        loadMore={this.fetchMoreData}
-        hasMore={this.state.hasmore}
-        loader={(
-          <div className="loader" key={0}></div>
-        )}
-        >
-           <ul className="list-container">
-            {this.state.cat.map( item => {
-              return (
-                <li className="list-item" key={item.id}>  
-                  <Accordion>
+  submit = (e) => {
+    e.preventDefault();
+    const search = this.state.search;
+    const ite = this.state.cat.filter(i => i.name.toLowerCase().includes(search.toLowerCase()));
+    const more = search.length ? false : true;
+
+    this.setState({
+      result: ite,
+      hasmore: more,
+    })
+    
+  }
+
+  renderList = (item) => {
+    return (
+      <li className="list-item" key={item.id}>  
+                  <Accordion style={{boxShadow: "1px 2px 5px rgba(0, 0, 0, 0.1)"}}>
                     <Card style={{backgroundColor: "#eee"}}>
-                      <Accordion.Toggle as={Card.Header} eventKey="0" style={{backgroundColor: "#3498db"}}>
+                      <Accordion.Toggle as={Card.Header} eventKey="0" style={{backgroundColor: "#76bbe9"}}>
                         <b>{item.name}</b> - {item.origin}
                       </Accordion.Toggle>
                       <Accordion.Collapse eventKey="0">
@@ -76,16 +84,43 @@ class App extends Component {
                     </Card>
                   </Accordion>
                 </li>
-              )
-            })}
-              </ul>
-            </InfiniteScroll>
-          
-       
+    )
+  }
 
+  render() {
+    return (
+      <div>
+        <img className="logo" src={Logo} alt="Cat Breeds" />
+        <div className="search">
+          <form onSubmit={this.submit}>
+            <input type="text" placeholder="Search cat name" value={this.state.search} onChange={this.change} />
+            <button type="submit">Search</button>
+          </form>
+        </div>
+        <InfiniteScroll
+        initialLoad={false}
+        loadMore={this.fetchMoreData}
+        hasMore={this.state.hasmore}
+        loader={(
+          <div className="loader" key={0}></div>
+        )}
+        >
+          {this.state.result.length ? <h5 className="result-head">Result for "{this.state.search}"</h5> : null}
+          <ul className="list-container">
+            { this.state.result.length 
+              ? 
+              this.state.result.map(result => this.renderList(result))
+              : 
+              this.state.cat.map( item => this.renderList(item))
+            }
+      
+          </ul>
+        </InfiniteScroll>
+          
         <div className="footer">
           <p>Malik 2020 | Built with <a href="https://thecatapi.com" target="blank">TheCatApi</a></p>
         </div>
+
       </div>
     )
   }

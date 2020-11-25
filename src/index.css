@@ -31,14 +31,28 @@ h6 {
 .search form {
   width: 100%;
   display: flex;
+  background-color: #eee;
+  border: 2px solid #3498db;
+  padding: 10px 12px;
+  border-radius: 10px;
 }
 
 .search input {
-  flex: 1;
+  flex: 2;
+  border: 0;
+  background-color: #eee;
+  outline: 0;
 }
 
 .search button {
   width: 100px;
+  height: 100%;
+  background-color: #76bbe9;
+  border: 0;
+  outline: 0;
+  padding: 5px 7px;
+  border-radius: 5px;
+  transition: all ease 0.5s;
 }
 
 .result-head {
@@ -48,6 +62,7 @@ h6 {
 
 .list-container {
   list-style: none;
+  padding: 0;
   width: 50vw;
   margin: 20px auto;
 }

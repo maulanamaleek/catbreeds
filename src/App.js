@@ -55,6 +55,8 @@ class App extends Component {
     const ite = this.state.cat.filter(i => i.name.toLowerCase().includes(search.toLowerCase()));
     const more = search.length ? false : true;
 
+
+
     this.setState({
       result: ite,
       hasmore: more,
@@ -111,6 +113,8 @@ class App extends Component {
         )}
         >
           {this.state.search !== "" ? <h5 className="result-head">Result for "{this.state.search}"</h5> : null}
+          
+
           <ul className="list-container">
             { this.state.search.length 
               ? 

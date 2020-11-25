@@ -32,14 +32,21 @@ class App extends Component {
     }
     
     this.setState({cat: newData});
-    
   }
 
   change = (e) => {
     this.setState({
       search: e.target.value,
     });
-    
+
+    const search = this.state.search;
+    const ite = this.state.cat.filter(i => i.name.toLowerCase().includes(search.toLowerCase()));
+    const more = search.length ? false : true;
+
+    this.setState({
+      result: ite,
+      hasmore: more,
+    })
   }
 
   submit = (e) => {
@@ -52,7 +59,6 @@ class App extends Component {
       result: ite,
       hasmore: more,
     })
-    
   }
 
   renderList = (item) => {
@@ -86,7 +92,6 @@ class App extends Component {
                 </li>
     )
   }
-
   render() {
     return (
       <div>
@@ -105,9 +110,9 @@ class App extends Component {
           <div className="loader" key={0}></div>
         )}
         >
-          {this.state.result.length ? <h5 className="result-head">Result for "{this.state.search}"</h5> : null}
+          {this.state.search !== "" ? <h5 className="result-head">Result for "{this.state.search}"</h5> : null}
           <ul className="list-container">
-            { this.state.result.length 
+            { this.state.search.length 
               ? 
               this.state.result.map(result => this.renderList(result))
               : 

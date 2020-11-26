@@ -1,6 +1,7 @@
 {
   "name": "ok",
   "version": "0.1.0",
+  "homepage": "http://maulanamaleek.github.io/catbreeds/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",

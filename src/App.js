@@ -53,12 +53,14 @@ class App extends Component {
   }
 
   //reset user input 
-  click = () => {
+  click = (e) => {
+    e.preventDefault();
     this.setState({
       search: "",
       result: [],
-      hasMore: true,
+      hasmore: true,
     })
+    console.log(this.state.hasmore)
   }
 
   // display item that match with user input

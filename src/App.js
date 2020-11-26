@@ -60,7 +60,6 @@ class App extends Component {
       result: [],
       hasmore: true,
     })
-    console.log(this.state.hasmore)
   }
 
   // display item that match with user input
@@ -86,7 +85,7 @@ class App extends Component {
                             </div>
 
                             <h6>Description</h6>
-                            <p>{item.description}-<a href={item.wikipedia_url}>More info</a></p>
+                            <p>{item.description}<br /><a href={item.wikipedia_url}>More info</a></p>
 
                             <h6>Temperament</h6>
                             <p>{item.temperament}</p>

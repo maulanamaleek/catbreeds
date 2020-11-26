@@ -16,11 +16,13 @@ class App extends Component {
     }
   }
 
+  // get data from api after page load
   componentDidMount(){
     axios.get('https://api.thecatapi.com/v1/breeds?page=0&limit=10&api_key=7459a40e-be79-4420-bcd2-08c6c649bb6b')
     .then(data => this.setState({cat: data.data}))
   };
 
+  // get more data when user scroll
   fetchMoreData = async () => {
     const check = this.state.cat.length / 10;
     const load = await axios.get(`https://api.thecatapi.com/v1/breeds?page=${check}&limit=15&api_key=7459a40e-be79-4420-bcd2-08c6c649bb6b`)
@@ -34,6 +36,7 @@ class App extends Component {
     this.setState({cat: newData});
   }
 
+  // filter item that match with user input
   change = (e) => {
     this.setState({
       search: e.target.value,
@@ -49,6 +52,7 @@ class App extends Component {
     })
   }
 
+  //reset user input 
   click = () => {
     this.setState({
       search: "",
@@ -57,19 +61,8 @@ class App extends Component {
     })
   }
 
-  submit = (e) => {
-    e.preventDefault();
-    const search = this.state.search;
-    const item = this.state.cat.filter(i => i.name.toLowerCase().includes(search.toLowerCase()));
-    const more = search.length ? false : true;
-
-    this.setState({
-      result: item,
-      hasmore: more,
-    })
-  }
-
-  renderList = (item) => {
+  // display item that match with user input
+  displayList = (item) => {
     return (
       <li className="list-item" key={item.id}>  
                   <Accordion style={{boxShadow: "1px 2px 5px rgba(0, 0, 0, 0.1)"}}>
@@ -108,12 +101,14 @@ class App extends Component {
     return (
       <div>
         <img className="logo" src={Logo} alt="Cat Breeds" />
+
         <div className="search">
           <form>
             <input type="text" placeholder="Search cat name" value={this.state.search} onChange={this.change} />
             <button onClick={this.click}>x</button>
           </form>
         </div>
+
         <InfiniteScroll
         initialLoad={false}
         loadMore={this.fetchMoreData}
@@ -124,15 +119,13 @@ class App extends Component {
         >
           {this.state.search !== "" ? <h5 className="result-head">Result for "{this.state.search}"</h5> : null}
           
-
           <ul className="list-container">
             { this.state.search.length 
               ? 
-              this.state.result.map(result => this.renderList(result))
+              this.state.result.map(result => this.displayList(result))
               : 
-              this.state.cat.map( item => this.renderList(item))
+              this.state.cat.map( item => this.displayList(item))
             }
-      
           </ul>
         </InfiniteScroll>
           

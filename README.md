@@ -2,7 +2,7 @@
 
 Built with React and React Bootstrap.
 
-![alt text](https://github.com/maulanamaleek/catbreeds/blob/mastr/image.jpg?raw=true)
+![alt text](https://github.com/maulanamaleek/catbreeds/blob/main/banner.jpg?raw=true)
 
 ## Features
 
